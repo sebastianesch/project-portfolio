@@ -1,0 +1,9 @@
+{
+    "sqltools.connections": [
+        {
+            "dialect": "SQLite",
+            "database": "./sqlite.db",
+            "name": "Project Portfolio"
+        }
+    ]
+}
