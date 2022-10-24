@@ -13,8 +13,10 @@
   "devDependencies": {
     "@ui5/cli": "^2.14.1",
     "@sap/ux-ui5-tooling": "1",
-    "@sap/ux-specification": "UI5-1.102",
-    "@sap-ux/ui5-middleware-fe-mockserver": "2"
+    "@sap/ux-specification": "^1.102.10",
+    "@sap-ux/ui5-middleware-fe-mockserver": "2",
+    "@sap/ui5-builder-webide-extension": "^1.1.8",
+    "ui5-task-zipper": "^0.5.1"
   },
   "scripts": {
     "start": "echo \\\"This application was generated with a local metadata file and does not reference a live server. Please add the required server configuration or start this application with mock data using the target: npm run start-mock\\\"",
@@ -30,7 +32,9 @@
   "ui5": {
     "dependencies": [
       "@sap/ux-ui5-tooling",
-      "@sap-ux/ui5-middleware-fe-mockserver"
+      "@sap-ux/ui5-middleware-fe-mockserver",
+      "@sap/ui5-builder-webide-extension",
+      "ui5-task-zipper"
     ]
   },
   "sapux": true,

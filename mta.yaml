@@ -1,112 +1,109 @@
----
-_schema-version: '3.1'
+_schema-version: "3.1"
 ID: project-portfolio
 version: 1.0.0
-description: "A simple CAP project."
+description: A simple CAP project.
 parameters:
-  deploy-mode: html5-repo
+  deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:
-    - builder: custom
-      commands:
-        - npm install --production
-        - npx -p @sap/cds-dk cds build --production
+  - builder: custom
+    commands:
+    - npm install --production
+    - npx -p @sap/cds-dk cds build --production
 
 modules:
-  - name: project-portfolio-srv
-    type: nodejs
-    path: gen/srv
+- name: project-portfolio-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: project-portfolio-db
+  - name: project-portfolio-auth
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url} # required by consumers of CAP services (e.g. approuter)
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    builder: npm-ci
+- name: project-portfolio-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: project-portfolio-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: project-portfolio-app-content
+  type: com.sap.application.content
+  path: app
+  requires:
+  - name: project-portfolio-html5-repo-host
     parameters:
-      buildpack: nodejs_buildpack
-    build-parameters:
-      builder: npm-ci
-    provides:
-      - name: srv-api # required by consumers of CAP services (e.g. approuter)
-        properties:
-          srv-url: ${default-url}
+      content-target: true
+  build-parameters:
+    build-result: resources
     requires:
-      - name: project-portfolio-db
-      - name: project-portfolio-auth
+    - artifacts:
+      - customersapp.zip
+      name: customersapp
+      target-path: resources/
+    - artifacts:
+      - projectsapp.zip
+      name: projectsapp
+      target-path: resources/
 
-  - name: project-portfolio-db-deployer
-    type: hdb
-    path: gen/db
+- name: customersapp
+  type: html5
+  path: app/customersapp
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+
+- name: projectsapp
+  type: html5
+  path: app/projectsapp
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+
+- name: project-portfolio-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: project-portfolio-destination
     parameters:
-      buildpack: nodejs_buildpack
-    requires:
-      - name: project-portfolio-db
-
-  - name: project-portfolio-app-content
-    type: com.sap.application.content
-    path: app
-    requires: 
-      - name: project-portfolio-html5-repo-host
-        parameters:
-          content-target: true
-    build-parameters:
-      build-result: resources
-      requires:
-        - artifacts:
-            - customersapp.zip
-          name: customersapp
-          target-path: resources/
-        - artifacts:
-            - projectsapp.zip
-          name: projectsapp
-          target-path: resources/
-
-  - name: customersapp
-    type: html5
-    path: app/customersapp
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms: []
-
-  - name: projectsapp
-    type: html5
-    path: app/projectsapp
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms: []
-  
-  - name: project-portfolio-destination-content
-    type: com.sap.application.content
-    requires: 
-      - name: project-portfolio-destination
-        parameters:
-          content-target: true
-      - name: project-portfolio-html5-repo-host
-        parameters:
-          service-key:
-            name: project-portfolio-html5-repo-host-key
-      - name: project-portfolio-auth
-        parameters:
-          service-key:
-            name: project-portfolio-auth-key
+      content-target: true
+  - name: project-portfolio-html5-repo-host
     parameters:
-      content:
-        instance:
-          destinations:
-            - Name: project_portfolio_html5_repo_host
-              ServiceInstanceName: project-portfolio-html5-repo-host
-              ServiceKeyName: project-portfolio-html5-repo-host-key
-              sap.cloud.service: projectportfolio
-            - Name: project_portfolio_auth
-              Authentication: OAuth2UserTokenExchange
-              ServiceInstanceName: project-portfolio-auth
-              ServiceKeyName: project-portfolio-auth-key
-              sap.cloud.service: projectportfolio
-    build-parameters:
-      no-source: true
+      service-key:
+        name: project-portfolio-html5-repo-host-key
+  - name: project-portfolio-auth
+    parameters:
+      service-key:
+        name: project-portfolio-auth-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: project_portfolio_html5_repo_host
+          ServiceInstanceName: project-portfolio-html5-repo-host
+          ServiceKeyName: project-portfolio-html5-repo-host-key
+          sap.cloud.service: projectportfolio
+        - Name: project_portfolio_auth
+          Authentication: OAuth2UserTokenExchange
+          ServiceInstanceName: project-portfolio-auth
+          ServiceKeyName: project-portfolio-auth-key
+          sap.cloud.service: projectportfolio
+  build-parameters:
+    no-source: true
 
 resources:
   - name: project-portfolio-db
@@ -124,7 +121,7 @@ resources:
       config:
         xsappname: project-portfolio-${org}-${space}
         tenant-mode: dedicated
-  
+    
   - name: project-portfolio-destination
     type: org.cloudfoundry.managed-service
     requires:
@@ -137,25 +134,24 @@ resources:
         init_data:
           instance:
             destinations:
-              - Name: ui5
-                URL: https://ui5.sap.com
-                Type: HTTP
-                ProxyType: Internet
-                Authentication: NoAuthentication
-                Description: Destination for the SAPUI5 CDN
-              - Name: project_portfolio_api
-                URL: ~{srv-api/srv-url}
-                Type: HTTP
-                ProxyType: Internet
-                Authentication: NoAuthentication
-                Description: Destination for the Project Portfolio API
-                HTML5.DynamicDestination: true
-                HTML5.ForwardAuthToken: true
+            - Name: ui5
+              URL: https://ui5.sap.com
+              Type: HTTP
+              ProxyType: Internet
+              Authentication: NoAuthentication
+              Description: Destination for the SAPUI5 CDN
+            - Name: project_portfolio_api
+              URL: ~{srv-api/srv-url}              
+              Type: HTTP
+              ProxyType: Internet
+              Authentication: NoAuthentication
+              Description: Destination for the Project Portfolio API
+              HTML5.DynamicDestination: true
+              HTML5.ForwardAuthToken: true              
         version: 1.0.0
-
+      
   - name: project-portfolio-html5-repo-host
     type: org.cloudfoundry.managed-service
     parameters:
       service: html5-apps-repo
       service-plan: app-host
-
