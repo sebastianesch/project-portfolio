@@ -15,7 +15,8 @@
   },
   "scripts": {
     "start": "cds run",
-    "watch-projectsapp": "cds watch --open projectsapp/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-projectsapp": "cds watch --open projectsapp/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-customersapp": "cds watch --open customersapp/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "engines": {
     "node": "^16.15"
@@ -56,6 +57,7 @@
     }
   },
   "sapux": [
-    "app/projectsapp"
+    "app/projectsapp",
+    "app/customersapp"
   ]
 }
