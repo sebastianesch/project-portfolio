@@ -1,0 +1,57 @@
+@url = http://localhost:4004
+
+### Get Projects
+GET {{url}}/projects/Projects
+
+### Get Project
+GET {{url}}/projects/Projects(011a74f1-fc58-4502-8797-3dddc78e69cd)
+
+### Get Customers
+GET {{url}}/projects/Customers
+
+### Get Customer
+GET {{url}}/projects/Customers(a62e9e17-d2b0-47ba-b56d-6447b436de42)
+
+### Get Project Types
+GET {{url}}/projects/ProjectTypes
+
+### Get Project Types
+GET {{url}}/projects/ProjectTypes
+Accept-Language: de
+
+### Create Customer
+# @name CreateCustomer
+POST {{url}}/projects/Customers
+Content-Type: application/json
+
+{
+    "name": "TU Muenchen",
+    "industry": "Education",
+    "country": "BY"
+}
+
+### Get created customer
+GET {{url}}/projects/Customers({{CreateCustomer.response.body.ID}})
+
+### Update created customer
+PUT {{url}}/projects/Customers({{CreateCustomer.response.body.ID}})
+Content-Type: application/json
+
+{
+    "name": "TU München",
+    "industry": "Education",
+    "country": "DE"
+}
+
+### Get updated customer
+GET {{url}}/projects/Customers({{CreateCustomer.response.body.ID}})
+
+### Create Project
+POST {{url}}/projects/Projects
+
+{
+    "name": "TUM Practical Course WS 2022",
+    "startDate": "2022-11-09",
+    "description": "Developing apps on SAP BTP",
+    "customer_ID"
+}
