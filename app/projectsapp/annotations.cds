@@ -66,6 +66,16 @@ annotate service.Projects with @(
             ]
         },
 
+        FieldGroup #ProjectDescription : {
+            $Type : 'UI.FieldGroupType',
+            Data : [
+                {
+                    Value : description,
+                    Label : '{i18n>description}'
+                }
+            ]
+        },
+
         FieldGroup #CustomerData : {
             $Type : 'UI.FieldGroupType',
             Data : [
@@ -88,6 +98,11 @@ annotate service.Projects with @(
             {
                 $Type : 'UI.ReferenceFacet',
                 Target : '@UI.FieldGroup#ProjectData'
+            },
+            {
+                $Type : 'UI.ReferenceFacet',
+                Target : '@UI.FieldGroup#ProjectDescription',
+                Label : '{i18n>description}'
             },
             {
                 $Type : 'UI.ReferenceFacet',
