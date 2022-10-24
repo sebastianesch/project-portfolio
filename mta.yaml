@@ -25,6 +25,8 @@ modules:
       srv-url: ${default-url} # required by consumers of CAP services (e.g. approuter)
   parameters:
     buildpack: nodejs_buildpack
+    disk-quota: 768M
+    memory: 256M
   build-parameters:
     builder: npm-ci
 - name: project-portfolio-db-deployer
