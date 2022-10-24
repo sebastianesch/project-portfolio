@@ -64,6 +64,62 @@
                 "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
                 "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/project-portfolio/app/projectsapp\"}"
             }
+        },
+        {
+            "name": "Start customersapp Mock",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/app/customersapp",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-mock.yaml",
+                "--open",
+                "test/flpSandbox.html#projectportfoliocustomersapp-tile"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "port": 9229,
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/project-portfolio/app/customersapp\"}"
+            }
+        },
+        {
+            "name": "Start customersapp Local",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/app/customersapp",
+            "runtimeExecutable": "npx",
+            "windows": {
+                "runtimeExecutable": "npx.cmd"
+            },
+            "runtimeArgs": [
+                "fiori",
+                "run"
+            ],
+            "args": [
+                "--config",
+                "./ui5-local.yaml",
+                "--open",
+                "test/flpSandbox.html#projectportfoliocustomersapp-tile"
+            ],
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "outputCapture": "std",
+            "port": 9229,
+            "env": {
+                "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+                "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/project-portfolio/app/customersapp\"}"
+            }
         }
     ],
     "compounds": [],
