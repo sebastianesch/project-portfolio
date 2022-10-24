@@ -1,0 +1,22 @@
+@url = http://localhost:4004
+
+### Get Service Metadata
+GET {{url}}/projects/$metadata
+
+### Get Customers - top 5
+GET {{url}}/projects/Customers?$top=5
+
+### Get Customers - top 5 - skip 5
+GET {{url}}/projects/Customers?$top=5&$skip=5
+
+### Get Customers - filter by country
+GET {{url}}/projects/Customers?$filter=country eq 'BR'
+
+### Get Customer 88c011af-00bf-42de-ac62-a7db24f5a6bb with projects
+GET {{url}}/projects/Customers(88c011af-00bf-42de-ac62-a7db24f5a6bb)?$expand=projects
+
+### Get Customer with projects and project type
+GET {{url}}/projects/Customers(88c011af-00bf-42de-ac62-a7db24f5a6bb)?$expand=projects($expand=type)
+
+### Address specific project via customer
+GET {{url}}/projects/Customers(88c011af-00bf-42de-ac62-a7db24f5a6bb)/projects(19b7ef4d-d22a-46ad-be10-1a6c02031808)?$expand=type
