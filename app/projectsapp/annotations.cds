@@ -38,6 +38,62 @@ annotate service.Projects with @(
 
         SelectionFields : [
             startDate, endDate, customer_ID, type_code
+        ],
+
+        FieldGroup #ProjectData : {
+            $Type : 'UI.FieldGroupType',
+            Data : [
+                {
+                    Value : name,
+                    Label : '{i18n>name}'
+                },
+                {
+                    Value : startDate,
+                    Label : '{i18n>startDate}'
+                },
+                {
+                    Value : endDate,
+                    Label : '{i18n>endDate}'
+                },
+                {
+                    Value : customer_ID,
+                    Label : '{i18n>customer}'
+                },
+                {
+                    Value : type_code,
+                    Label : '{i18n>type}'
+                }
+            ]
+        },
+
+        FieldGroup #CustomerData : {
+            $Type : 'UI.FieldGroupType',
+            Data : [
+                {
+                    Value : customer.name,
+                    Label : '{i18n>name}'
+                },
+                {
+                    Value : customer.industry,
+                    Label : '{i18n>industry}'
+                },
+                {
+                    Value : customer.country,
+                    Label : '{i18n>country}'
+                }
+            ]
+        },
+
+        Facets : [
+            {
+                $Type : 'UI.ReferenceFacet',
+                Target : '@UI.FieldGroup#ProjectData'
+            },
+            {
+                $Type : 'UI.ReferenceFacet',
+                Target : '@UI.FieldGroup#CustomerData',
+                Label : '{i18n>customer}'
+            }
         ]
     }
 ) {
