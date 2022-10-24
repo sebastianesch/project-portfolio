@@ -7,7 +7,7 @@
             "csrfProtection": false,
             "source": "^/v2/customers/(.*)$",
             "target": "/v2/customers/$1",
-            "destination": "projectportfolio-api"
+            "destination": "project_portfolio_api"
         },
         {
             "source": "^/resources/(.*)$",
