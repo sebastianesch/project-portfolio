@@ -103,7 +103,8 @@ modules:
           Authentication: OAuth2UserTokenExchange
           ServiceInstanceName: project-portfolio-auth
           ServiceKeyName: project-portfolio-auth-key
-          sap.cloud.service: projectportfolio
+          sap.cloud.service: 
+        existing_destinations_policy: ignore
   build-parameters:
     no-source: true
 
@@ -149,7 +150,8 @@ resources:
               Authentication: NoAuthentication
               Description: Destination for the Project Portfolio API
               HTML5.DynamicDestination: true
-              HTML5.ForwardAuthToken: true              
+              HTML5.ForwardAuthToken: true
+            existing_destinations_policy: ignore              
         version: 1.0.0
       
   - name: project-portfolio-html5-repo-host
