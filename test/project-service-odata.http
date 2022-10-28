@@ -5,6 +5,7 @@ GET {{url}}/projects/$metadata
 
 ### Get Customers - top 5
 GET {{url}}/projects/Customers?$top=5
+Authorization: Basic alice:alice
 
 ### Get Customers - top 5 - skip 5
 GET {{url}}/projects/Customers?$top=5&$skip=5

@@ -21,8 +21,9 @@ Accept-Language: de
 
 ### Create Customer
 # @name CreateCustomer
-POST {{url}}/projects/Customers
+POST {{url}}/customers/Customers
 Content-Type: application/json
+Authorization: Basic alice:alice
 
 {
     "name": "TU Muenchen",
