@@ -19,6 +19,7 @@ modules:
   requires:
   - name: project-portfolio-db
   - name: project-portfolio-auth
+  - name: project-portfolio-logging
   provides:
   - name: srv-api
     properties:
@@ -103,7 +104,7 @@ modules:
           Authentication: OAuth2UserTokenExchange
           ServiceInstanceName: project-portfolio-auth
           ServiceKeyName: project-portfolio-auth-key
-          sap.cloud.service: 
+          sap.cloud.service: projectportfolio
         existing_destinations_policy: ignore
   build-parameters:
     no-source: true
@@ -159,3 +160,9 @@ resources:
     parameters:
       service: html5-apps-repo
       service-plan: app-host
+
+  - name: project-portfolio-logging
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: application-logs
+      service-plan: lite
