@@ -1,0 +1,15 @@
+@serviceUrl = http://localhost:4004/customers
+@authorization = Basic alice:alice
+
+###
+GET {{serviceUrl}}/Projects
+Authorization: {{authorization}}
+
+###
+GET {{serviceUrl}}/Customers
+Authorization: {{authorization}}
+
+###
+GET {{serviceUrl}}/Customers(ID=29514726-9142-4af7-96db-3221a4fb817b)
+Authorization: {{authorization}}
+
