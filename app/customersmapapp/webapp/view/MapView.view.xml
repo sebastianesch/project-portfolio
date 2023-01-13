@@ -1,7 +1,74 @@
+<!--
+    The default namespace is sap.m, we additionally define namespaces for
+    sap.ui.core.mvc to declare the view and sap.ui.vk and sap.ui.vbm for the
+    MapContainer and GeoMap controls.
+-->
 <mvc:View controllerName="projectportfolio.customersmapapp.controller.MapView"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:vk="sap.ui.vk"
+    xmlns:vbm="sap.ui.vbm"
+    displayBlock="true" >
     <Page id="page" title="{i18n>title}">
-        <content />
+        <content>
+            <vk:MapContainer id="mapContainer"
+                autoAdjustHeight="true"
+                showSettings="false"
+                showFullScreen="false"
+                showRectangularZoom="false"
+                showSelection="false"
+                showHome="true">
+                <vk:ContainerContent>
+                    <vk:content>
+                        <!--
+                            The mapConfiguration is read from the named model
+                            localMapConfiguration - the local model is
+                            initialized in the controller of this view
+                            webapp/controller/MapView.controller.js
+                        -->
+                        <vbm:GeoMap id="map"
+                            width="100%"
+                            height="100%"
+                            enableAnimation="false"
+                            mapConfiguration="{localMapConfiguration>/}"
+                            initialPosition="9.207342187217407;49.150743825607506;0"
+                            initialZoom="15">
+                            <vbm:vos>
+                                <!--
+                                    The Spots on the map are created from the
+                                    local named model "localCustomers". We use the
+                                    Customers entity here.
+
+                                    The model is initialized in the controller of
+                                    this view.
+                                -->
+                                <vbm:Spots posChangeable="true"
+                                    scaleChangeable="true"
+                                    contextMenu="onContextMenuItem"
+                                    items="{localCustomers>/Customers}">
+                                    <vbm:items>
+                                        <!--
+                                            For each Spot shown on the map,
+                                            we use the location and customerName
+                                            attributes of the current Customers instance.
+
+                                            The event handler for the "click" event of a
+                                            Spot is implemented in the controller of the view.
+                                        -->
+                                        <vbm:Spot position="{localCustomers>location}"
+                                            type="Default"
+                                            selectColor="RHLSA(0.0;1.0;1.0;1.0)"
+                                            tooltip="{localCustomers>customerName}"
+                                            icon="sap-icon://customer"
+                                            click="onClickSpot">
+                                        </vbm:Spot>
+                                    </vbm:items>
+                                </vbm:Spots>
+                            </vbm:vos>
+                        </vbm:GeoMap>
+                    </vk:content>
+                </vk:ContainerContent>
+            </vk:MapContainer>
+        </content>
     </Page>
 </mvc:View>
