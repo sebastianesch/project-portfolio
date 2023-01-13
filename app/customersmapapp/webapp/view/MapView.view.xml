@@ -1,0 +1,7 @@
+<mvc:View controllerName="projectportfolio.customersmapapp.controller.MapView"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <content />
+    </Page>
+</mvc:View>

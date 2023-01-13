@@ -1,17 +1,7 @@
 _schema-version: "3.1"
 ID: project-portfolio
-version: 1.0.0
 description: A simple CAP project.
-parameters:
-  deploy_mode: html5-repo
-  enable-parallel-deployments: true
-build-parameters:
-  before-all:
-  - builder: custom
-    commands:
-    - npm install --production
-    - npx -p @sap/cds-dk cds build --production
-
+version: 1.0.0
 modules:
 - name: project-portfolio-srv
   type: nodejs
@@ -23,7 +13,7 @@ modules:
   provides:
   - name: srv-api
     properties:
-      srv-url: ${default-url} # required by consumers of CAP services (e.g. approuter)
+      srv-url: ${default-url}
   parameters:
     buildpack: nodejs_buildpack
     disk-quota: 768M
@@ -55,7 +45,10 @@ modules:
       - projectsapp.zip
       name: projectsapp
       target-path: resources/
-
+    - artifacts:
+      - projectportfoliocustomersmapapp.zip
+      name: projectportfoliocustomersmapapp
+      target-path: resources/
 - name: customersapp
   type: html5
   path: app/customersapp
@@ -66,7 +59,6 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-
 - name: projectsapp
   type: html5
   path: app/projectsapp
@@ -77,7 +69,6 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-
 - name: project-portfolio-destination-content
   type: com.sap.application.content
   requires:
@@ -100,69 +91,83 @@ modules:
           ServiceInstanceName: project-portfolio-html5-repo-host
           ServiceKeyName: project-portfolio-html5-repo-host-key
           sap.cloud.service: projectportfolio
-        - Name: project_portfolio_auth
-          Authentication: OAuth2UserTokenExchange
+        - Authentication: OAuth2UserTokenExchange
+          Name: project_portfolio_auth
           ServiceInstanceName: project-portfolio-auth
           ServiceKeyName: project-portfolio-auth-key
           sap.cloud.service: projectportfolio
         existing_destinations_policy: ignore
   build-parameters:
     no-source: true
-
+- name: projectportfoliocustomersmapapp
+  type: html5
+  path: app/customersmapapp
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
 resources:
-  - name: project-portfolio-db
-    type: com.sap.xs.hdi-container
-    parameters:
-      service: hana
-      service-plan: hdi-shared
-
-  - name: project-portfolio-auth
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: xsuaa
-      service-plan: application
-      path: ./xs-security.json
-      config:
-        xsappname: project-portfolio-${org}-${space}
-        tenant-mode: dedicated
-    
-  - name: project-portfolio-destination
-    type: org.cloudfoundry.managed-service
-    requires:
-      - name: srv-api
-    parameters:
-      service: destination
-      service-plan: lite
-      config:
-        HTML5Runtime_enabled: true
-        init_data:
-          instance:
-            destinations:
-            - Name: ui5
-              URL: https://ui5.sap.com
-              Type: HTTP
-              ProxyType: Internet
-              Authentication: NoAuthentication
-              Description: Destination for the SAPUI5 CDN
-            - Name: project_portfolio_api
-              URL: ~{srv-api/srv-url}              
-              Type: HTTP
-              ProxyType: Internet
-              Authentication: NoAuthentication
-              Description: Destination for the Project Portfolio API
-              HTML5.DynamicDestination: true
-              HTML5.ForwardAuthToken: true
-            existing_destinations_policy: ignore              
-        version: 1.0.0
-      
-  - name: project-portfolio-html5-repo-host
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: html5-apps-repo
-      service-plan: app-host
-
-  - name: project-portfolio-logging
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: application-logs
-      service-plan: lite
+- name: project-portfolio-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: project-portfolio-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: project-portfolio-${org}-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+- name: project-portfolio-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Description: Destination for the SAPUI5 CDN
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          - Authentication: NoAuthentication
+            Description: Destination for the Project Portfolio API
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            Name: project_portfolio_api
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
+          existing_destinations_policy: ignore
+      version: 1.0.0
+    service: destination
+    service-plan: lite
+  requires:
+  - name: srv-api
+- name: project-portfolio-html5-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+- name: project-portfolio-logging
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: application-logs
+    service-plan: lite
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install --production
+    - npx -p @sap/cds-dk cds build --production
