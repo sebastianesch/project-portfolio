@@ -23,8 +23,7 @@
                         <!--
                             The mapConfiguration is read from the named model
                             localMapConfiguration - the local model is
-                            initialized in the controller of this view
-                            webapp/controller/MapView.controller.js
+                            defined in the manifest.json file
                         -->
                         <vbm:GeoMap id="map"
                             width="100%"
@@ -36,16 +35,15 @@
                             <vbm:vos>
                                 <!--
                                     The Spots on the map are created from the
-                                    local named model "localCustomers". We use the
-                                    Customers entity here.
+                                    local named model "localCustomers".
+                                    The model is defined in the manifest.json file
 
-                                    The model is initialized in the controller of
-                                    this view.
+                                    TODO: Fix - doesn't work currently
                                 -->
                                 <vbm:Spots posChangeable="true"
                                     scaleChangeable="true"
                                     contextMenu="onContextMenuItem"
-                                    items="{localCustomers>/Customers}">
+                                    items="{localCustomers>/}">
                                     <vbm:items>
                                         <!--
                                             For each Spot shown on the map,

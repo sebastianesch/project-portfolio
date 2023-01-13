@@ -1,0 +1,40 @@
+{
+	"MapProvider": [
+		{
+			"Id": "base",
+			"name": "Base",
+			"tileX": "512",
+			"tileY": "512",
+			"minLOD": "1",
+			"maxLOD": "19",
+			"copyright": "openstreetmap.org",
+			"Source": [
+				{
+					"id": "a",
+					"url": "https://a.tile.openstreetmap.org/{LOD}/{X}/{Y}.png"
+				},
+				{
+					"id": "b",
+					"url": "https://b.tile.openstreetmap.org/{LOD}/{X}/{Y}.png"
+				},
+				{
+					"id": "c",
+					"url": "https://c.tile.openstreetmap.org/{LOD}/{X}/{Y}.png"
+				}
+			]
+		}
+	],
+	"MapLayerStacks": [
+		{
+			"name": "Default",
+			"MapLayer": [
+				{
+					"name": "Default",
+					"refMapProvider": "Base",
+					"opacity": "1.0"
+				}
+			],
+			"colBkgnd": "rgb(0,0,0)"
+		}
+	]
+}

@@ -1,0 +1,22 @@
+[
+    {
+        "ID": 1,
+        "position": "49.1539941;9.2058093;0",
+        "customerName": "IBsolution GmbH - Heilbronn"
+    },
+    {
+        "ID": 2,
+        "position": "48.1487639;11.5352458;0",
+        "customerName": "IBsolution GmbH - München"
+    },
+    {
+        "ID": 3,
+        "position": "51.1990637;6.6943116;0",
+        "customerName": "IBsolution GmbH - Neuss"
+    },
+    {
+        "ID": 4,
+        "position": "49.4770549;8.4677387;0",
+        "customerName": "IBsolution GmbH - Mannheim"
+    }
+]

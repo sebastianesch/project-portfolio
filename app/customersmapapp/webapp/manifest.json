@@ -24,6 +24,14 @@
                     "localUri": "localService/metadata.xml",
                     "odataVersion": "4.0"
                 }
+            },
+            "localMapConfiguration": {
+                "uri": "model/mapConfiguration.json",
+                "type": "JSON"
+            },
+            "localCustomers": {
+                "uri": "model/customers.json",
+                "type": "JSON"
             }
         }
     },
@@ -78,6 +86,12 @@
                     "autoExpandSelect": true,
                     "earlyRequests": true
                 }
+            },
+            "localMapConfiguration": {
+                "dataSource": "localMapConfiguration"
+            },
+            "localCustomers": {
+                "dataSource": "localCustomers"
             }
         },
         "resources": {
