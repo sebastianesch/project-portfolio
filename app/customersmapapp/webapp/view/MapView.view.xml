@@ -43,7 +43,7 @@
                                 <vbm:Spots posChangeable="true"
                                     scaleChangeable="true"
                                     contextMenu="onContextMenuItem"
-                                    items="{localCustomers>/}">
+                                    items="{localCustomers>/Customers}">
                                     <vbm:items>
                                         <!--
                                             For each Spot shown on the map,
@@ -53,7 +53,7 @@
                                             The event handler for the "click" event of a
                                             Spot is implemented in the controller of the view.
                                         -->
-                                        <vbm:Spot position="{localCustomers>location}"
+                                        <vbm:Spot position="{localCustomers>position}"
                                             type="Default"
                                             selectColor="RHLSA(0.0;1.0;1.0;1.0)"
                                             tooltip="{localCustomers>customerName}"
