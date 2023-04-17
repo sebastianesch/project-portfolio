@@ -1,4 +1,4 @@
-const proxy = require('@sap/cds-odata-v2-adapter-proxy')
+const proxy = require('@cap-js-community/odata-v2-adapter')
 const cds = require('@sap/cds')
 
 cds.on('bootstrap', app => {

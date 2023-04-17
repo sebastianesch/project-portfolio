@@ -1,103 +1,103 @@
 {
-    "name": "project-portfolio",
-    "version": "1.0.0",
-    "description": "A simple CAP project.",
-    "repository": "<Add your repository here>",
-    "license": "UNLICENSED",
-    "private": true,
-    "dependencies": {
-        "@sap/cds": "^6",
-        "@sap/cds-dk": "^6.2.3",
-        "@sap/cds-odata-v2-adapter-proxy": "^1.9.10",
-        "express": "^4",
-        "@sap/xssec": "^3",
-        "passport": "^0",
-        "hdb": "^0.19.0"
+  "name": "project-portfolio",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^6",
+    "@sap/cds-dk": "^6",
+    "@cap-js-community/odata-v2-adapter": "^1.10",
+    "express": "^4",
+    "@sap/xssec": "^3",
+    "passport": "^0",
+    "hdb": "^0.19.0"
+  },
+  "devDependencies": {
+    "@sap/ux-specification": "^1.108.2",
+    "cds-launchpad-plugin": "^1",
+    "rimraf": "^5",
+    "sqlite3": "^5"
+  },
+  "scripts": {
+    "start": "cds run",
+    "undeploy": "cf undeploy project-portfolio --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "watch-customersmapapp": "cds watch --open customersmapapp/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "engines": {
+    "node": "^16.15"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es2020": true,
+      "node": true,
+      "jest": true,
+      "mocha": true
     },
-    "devDependencies": {
-        "@sap/ux-specification": "^1.102.14",
-        "cds-launchpad-plugin": "^1.0.7",
-        "rimraf": "^3.0.2",
-        "sqlite3": "^5.0.4"
+    "globals": {
+      "SELECT": true,
+      "INSERT": true,
+      "UPDATE": true,
+      "DELETE": true,
+      "CREATE": true,
+      "DROP": true,
+      "CDL": true,
+      "CQL": true,
+      "CXL": true,
+      "cds": true
     },
-    "scripts": {
-        "start": "cds run",
-        "undeploy": "cf undeploy project-portfolio --delete-services --delete-service-keys --delete-service-brokers",
-        "build": "rimraf resources mta_archives && mbt build --mtar archive",
-        "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
-        "watch-customersmapapp": "cds watch --open customersmapapp/webapp/index.html?sap-ui-xx-viewCache=false"
+    "rules": {
+      "no-console": "off",
+      "require-atomic-updates": "off"
+    }
+  },
+  "cds": {
+    "features": {
+      "kibana_formatter": true
     },
-    "engines": {
-        "node": "^16.15"
-    },
-    "eslintConfig": {
-        "extends": "eslint:recommended",
-        "env": {
-            "es2020": true,
-            "node": true,
-            "jest": true,
-            "mocha": true
-        },
-        "globals": {
-            "SELECT": true,
-            "INSERT": true,
-            "UPDATE": true,
-            "DELETE": true,
-            "CREATE": true,
-            "DROP": true,
-            "CDL": true,
-            "CQL": true,
-            "CXL": true,
-            "cds": true
-        },
-        "rules": {
-            "no-console": "off",
-            "require-atomic-updates": "off"
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "database": "db.sqlite"
         }
-    },
-    "cds": {
-        "features": {
-            "kibana_formatter": true
+      },
+      "[production]": {
+        "auth": {
+          "kind": "xsuaa"
         },
-        "requires": {
-            "db": {
-                "kind": "sql",
-                "credentials": {
-                    "database": "sqlite.db"
-                }
+        "db": {
+          "kind": "hana-cloud"
+        }
+      },
+      "[development]": {
+        "auth": {
+          "strategy": "mock",
+          "users": {
+            "alice": {
+              "password": "alice",
+              "roles": [
+                "User"
+              ]
             },
-            "[production]": {
-                "auth": {
-                    "kind": "xsuaa"
-                },
-                "db": {
-                    "kind": "hana-cloud"
-                }
-            },
-            "[development]": {
-                "auth": {
-                    "strategy": "mock",
-                    "users": {
-                        "alice": {
-                            "password": "alice",
-                            "roles": [
-                                "User"
-                            ]
-                        },
-                        "bob": {
-                            "password": "bob",
-                            "roles": [
-                                "User"
-                            ]
-                        }
-                    }
-                }
+            "bob": {
+              "password": "bob",
+              "roles": [
+                "User"
+              ]
             }
+          }
         }
-    },
-    "sapux": [
-        "app/customersapp",
-        "app/projectsapp",
-        "app/customersmapapp"
-    ]
+      }
+    }
+  },
+  "sapux": [
+    "app/customersapp",
+    "app/projectsapp",
+    "app/customersmapapp"
+  ]
 }
