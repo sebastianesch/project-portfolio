@@ -45,7 +45,7 @@ The creation of the SAP HANA Cloud instance takes some time (more than 10 minute
 ## Step 1.2: Create a SAP Build Work Zone, standard edition subscription
 
 Follow the tutorial [Set Up SAP Build Work Zone, standard edition Using a Trial Account](https://developers.sap.com/tutorials/cp-portal-cloud-foundry-getting-started.html) to create a subscription to SAP Build Work Zone standard edition in your
-BTP Trial account and add your users as a Work Zone administrator.
+BTP Trial account and add your user as a Work Zone administrator.
 
 # Step 2: Checkout the app and deploy to BTP
 
@@ -101,10 +101,11 @@ select the Cloud Foundry Organisation and Space you want to connect to. (There i
 account).
 
 You can also login to CF via the command line, following the same procedure. Enter `cf login --sso -a <CF API URL>` into
-the terminal an press enter. Click on the link in the "Temporary Authentication Code ( Get one at <CF API URL> ):"
+the terminal and press enter. Click on the link in the "Temporary Authentication Code ( Get one at
+http://login.\<CF Region\>.hana.ondemand.com/passcode ):"
 message, copy the passcode and paste it into the terminal and press enter.
 
-When you are logged in to CF, you will see the information to which Cloud Foundry Organisatin and Space you are
+When you are logged in to CF, you will see the information to which Cloud Foundry Organisation and Space you are
 connected.
 
 ```
@@ -139,8 +140,8 @@ SAP Build Work Zone, standard edition.
 
 ![SAP BTP Cockpit - Subaccount - Instances and Subscriptions](btp_cockpit_trial_subaccount_instances_and_subscriptions_highlighted.png)
 
-If you get an "Access Denied" error message, you have to add your user to the Role Collection "Launchpad_Admin" in the
-BTP Cockpit in Security > Role Collections.
+*If you get an "Access Denied" error message, you have to add your user to the Role Collection "Launchpad_Admin" in the
+BTP Cockpit in Security > Role Collections. (See Step 1.2)*
 
 ### Create a new Site
 
@@ -168,6 +169,8 @@ step. Note that they have "HTML5 Apps" as Channel, the Role has "Local" as Chann
 
 Click on "+ New" and select "Group" to create new tile group for the Launchpad. Name the Group "Project Portfolio"
 and assign both apps to your group. Save your group.
+
+*(The Customers Maps app is incomplete at the moment and therefore not available to be added to a Group in Launchpad.)*
 
 ### Create a Role for your Site
 
@@ -207,25 +210,23 @@ We need to add the roles defined by the CAP Application backend and we need to a
 ### Add required role
 
 In the first section "Roles" click on the value help icon for the "Role Name" field. In the dialog that appears, set
-the filter for "Application Identifier" to "project-portfolio-<your app identifier>". The only visible role should be
+the filter for "Application Identifier" to "project-portfolio-\<your app identifier\>". The only visible role should be
 the "User" role of the Project Portfolio app. Select it and click "Add" at the bottom of the dialog.
 
 ### Add your user
 
 In the section "Users" you can start typing your e-mail address into the "ID" field. The value help will suggest your
-trail user with the Identity Provider "Default Idenity Provider".
+trial user with the Identity Provider "Default Idenity Provider".
 
 ## Step 2.7: Confirm your Configuration
 
 After you have completed the configuration of your Launchpad and the Role Collection, you should be able to see the
 results in your Launchpad. But at the moment you will only see an empty Launchpad. You have to either open the URL
-of your Launchpad in an incognito window of your browser or you have to logoff from SAP ID Service and logon again.
+of your Launchpad in an incognito window of your browser, a different browser or you have to logoff from SAP ID Service
+and login again.
 
-Copy the link to your Launchpad and open it in an incognito window of your browser or in an other browser then the one
-you are using for BTP Cockpit and the Launchpad Admin.
-
-You should now see the Lauchpad with two tiles for the Customers and Projects app. (The Customers Maps app is
-incomplete at the moment and therefore not available to be added to a Group in Launchpad.)
+Copy the link to your Launchpad and open it in an incognito window of your browser. You should now see the Lauchpad
+with two tiles for the Customers and Projects app.
 
 # Step 3: Modify the application and deploy your changes
 
@@ -237,7 +238,7 @@ We want to add a "City" attribute to our customers, so your task is to:
 
  - extend the Customers entity in `db/schema.cds` with a city attribute (including a translateable label)
  - add the translation for the label to the `i18n/i18n.properties` file
- - add example data in the `db/data/projectportfolio.db-Customers.csv` file
+ - add example data for the city attribute in the `db/data/projectportfolio.db-Customers.csv` file
 
 You can test your modifications without deploying to SAP BTP by running your app via `cds watch`. You should see the
 additional city attribute and your example data when you call the OData services for customers and projects.
