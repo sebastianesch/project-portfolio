@@ -1,3 +1,6 @@
+> [!WARNING]
+> This repository uses outdated versions of CAP and uses OData V2. See https://github.com/sebastianesch/cap-project-portfolio for an up-to-date version.
+
 # Getting Started
 
 Welcome to your new project.
